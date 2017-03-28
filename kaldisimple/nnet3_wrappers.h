@@ -30,15 +30,16 @@
 #include "online2/online-nnet2-feature-pipeline.h"
 
 namespace kaldi {
+
     class NNet3OnlineWrapper {
     public:
-  
+
         NNet3OnlineWrapper(BaseFloat    beam,
                            int32        max_active,
                            int32        min_active,
                            BaseFloat    lattice_beam,
-                           BaseFloat    acoustic_scale, 
-                           std::string &word_syms_filename, 
+                           BaseFloat    acoustic_scale,
+                           std::string &word_syms_filename,
                            std::string &model_in_filename,
                            std::string &fst_in_str,
                            std::string &mfcc_config,
@@ -57,10 +58,12 @@ namespace kaldi {
 
         fst::SymbolTable                   *word_syms;
 
-        // feature_config includes configuration for the iVector adaptation,
+        // feature_opts includes configuration for the iVector adaptation,
         // as well as the basic features.
-        OnlineNnet2FeaturePipelineConfig          feature_config;
-        OnlineNnet3DecodingConfig                 nnet3_decoding_config;   
+        OnlineNnet2FeaturePipelineConfig          feature_opts;
+        nnet3::NnetSimpleLoopedComputationOptions decodable_opts;
+        LatticeFasterDecoderConfig                decoder_opts;
+        OnlineEndpointConfig                      endpoint_opts;
         OnlineNnet2FeaturePipelineInfo           *feature_info;
 
         nnet3::AmNnetSimple                       am_nnet;
@@ -79,4 +82,3 @@ namespace kaldi {
         double                                    likelihood;
     };
 }
-
